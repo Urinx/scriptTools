@@ -25,7 +25,7 @@ def dictionary(keys,k,fname='dictionary.txt'):
 					arr.append(i+j) 
 			return arr
 	####################
-	if type(keys)==list:
+	if type(keys[0])==list:
 		arr=generate2(keys,k)
 	else:
 		arr=generate(keys,k)
