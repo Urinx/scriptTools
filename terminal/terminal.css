@@ -1,0 +1,46 @@
+terminal{
+	display: block;
+	width: 505px;
+	height: 366px;
+	background: url('terminal.png');
+	border-radius: 3px;
+	overflow: hidden;
+	/* center */
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+terminal .terminalWindow{
+	width: 488px;
+	height: 343px;
+	position: absolute;
+	top: 23px;
+	overflow: hidden;
+}
+.terminalWindow .terminal{
+	position: absolute;
+}
+.terminalWindow .font{
+	word-wrap:break-word;
+	font-size: 12px;
+	color: rgba(201,222,237,0.5);
+	text-shadow: 0 0 1px #fff,0 0 1px #ff00de;
+}
+.terminalWindow .terminal div{
+	padding: 0;
+	padding-left: 5px;
+}
+.terminalWindow .terminal input{
+	margin: 0;
+	padding: 0;
+	height: 14px;
+	line-height: 12px;
+	background: transparent;
+	border: 0;
+	outline: none;
+	color: rgba(201,222,237,0.5);
+	text-shadow: 0 0 1px #fff,0 0 1px #ff00de;
+}
