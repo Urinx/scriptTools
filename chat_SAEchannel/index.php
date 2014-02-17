@@ -12,26 +12,41 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/init.php');
 	    var url='<?=$url?>';
 	    var name='<?=$name?>';
 	    var to='<?=$to?>';
+        var usr='';
+        var acc=to?1:0;
 	    var channel = sae.Channel(url);
 	    channel.onopen = function(){
-	    	if (to) {
+            if (to) {//B->A
 	    		setLayout('b1','Someone');
-	    		var data='to='+to+'&message='+name;
+                var data='to='+to+'&message='+name+':'+document.querySelector('#name').innerHTML;
 	    		ajax('http://smartqq.sinaapp.com/channel.php',data);
 	    	}
-	    	else{
+            else{//A wait B
 	    		setLayout('b1','Nobody');
 	    	}
 	    }
 	    channel.onmessage = function (message) {
-	    	if (!to) {
-	    		to=message.data;
-	    		setLayout('b1','Someone is online');
+            if (!to) {//A get B send
+                arr=message.data.split(':');
+                to=arr[0];
+                usr=arr[1];
+	    		setLayout('b1',usr+' is online');
 	    		playSound('res/incoming.mp3');
+                //A->B
+                var data='to='+to+'&message='+document.querySelector('#name').innerHTML;
+                ajax('http://smartqq.sinaapp.com/channel.php',data);
 	    	}
 	    	else{
-	    		setLayout('b1',message.data);
-	    		playSound('res/'+Math.floor(Math.random()*4)+'.m4a');
+                if(acc){//B get A username
+                    usr=message.data;
+                    setLayout('b1',usr+' is online');
+                    playSound('res/incoming.mp3');
+                    acc=acc-1;
+                }
+                else{
+                    setLayout('b1',usr+":<br>"+message.data);
+                    playSound('res/'+Math.floor(Math.random()*4)+'.m4a');
+                }
 	    	}
 	    }
 	</script>
@@ -39,7 +54,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/init.php');
 
 <qq class="lightblue_font lightblue_box">
 	<div id="b1"></div>
-	root&gt;&nbsp;&nbsp;<input class="lightblue_font">
+	&nbsp;<span id="name">root</span>&gt;&nbsp;<input class="lightblue_font">
 	<div id="b2"></div>
 </qq>
 <audio src="res/gulugulu.m4a"></audio>

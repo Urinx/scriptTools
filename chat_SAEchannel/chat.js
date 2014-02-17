@@ -43,15 +43,19 @@ function setLayout(b,str){
 
 function keyProcess(ev){
 	var input=document.querySelector('input');
-	if (ev.keyCode==13) {
+    var uname=document.querySelector('#name');
+	if (ev.keyCode==13 && to) {
 		var data='to='+to+'&message='+input.value;
 		ajax('http://smartqq.sinaapp.com/channel.php',data);
-		setLayout('b2',input.value);
+		setLayout('b2',uname.innerHTML+":<br>"+input.value);
 		input.value='';
 	};
 }
 
 window.addEventListener('load',function(){
+    var uname=document.querySelector('#name');
+	var tmp=prompt('Please enter your name:\n(less than 6 chars)');
+	uname.innerHTML=tmp;
 	var input=document.querySelector('input');
 	input.focus();
 	input.addEventListener('keypress',keyProcess);
